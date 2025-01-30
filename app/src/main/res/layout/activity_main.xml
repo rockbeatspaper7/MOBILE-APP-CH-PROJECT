@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/cellPhoneText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cell Phone:"
+        app:layout_constraintBottom_toTopOf="@+id/cellPhoneEdit"
+        app:layout_constraintEnd_toEndOf="@+id/cellPhoneEdit"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/cellPhoneEdit"
+        app:layout_constraintTop_toBottomOf="@+id/zipcodeEdit"
+        app:layout_constraintVertical_bias="0.48" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="93dp"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@+id/contactIcon"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:src="@drawable/contact_list_icon"
+            android:scaleType="fitCenter"
+            tools:contentDescription="contact icon" />
+
+        <ImageButton
+            android:id="@+id/mapIcon"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:src="@drawable/map_icon"
+            android:scaleType="fitCenter"
+            tools:contentDescription="map icon" />
+
+        <ImageButton
+            android:id="@+id/settingsIcon"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:src="@drawable/settings_icon"
+            android:scaleType="fitCenter"
+            tools:contentDescription="settings icon" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#BDBABA"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="82dp"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="189dp"
+                android:layout_height="37dp"
+                android:text="My Contact List"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.144"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.644"
+                tools:textSize="24sp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ToggleButton
+                android:id="@+id/toggleButton"
+                android:layout_width="74dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="32dp"
+                android:layout_weight="1"
+                android:text="Off" />
+
+            <Space
+                android:layout_width="140dp"
+                android:layout_height="46dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/saveButton"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="77dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_weight="1"
+                android:text="Save" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/contactText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contact:"
+        app:layout_constraintBottom_toTopOf="@+id/contactEdit"
+        app:layout_constraintEnd_toEndOf="@+id/contactEdit"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/contactEdit"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.953" />
+
+    <EditText
+        android:id="@+id/contactEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:hint="Enter Name"
+        android:inputType="textCapWords"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/addressEdit"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/addressEdit"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/addressText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Address:"
+        app:layout_constraintBottom_toTopOf="@+id/addressEdit"
+        app:layout_constraintEnd_toEndOf="@+id/addressEdit"
+        app:layout_constraintHorizontal_bias="0.006"
+        app:layout_constraintStart_toStartOf="@+id/addressEdit"
+        app:layout_constraintTop_toBottomOf="@+id/contactEdit"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/addressEdit"
+        android:layout_width="364dp"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:hint="Enter Street Address"
+        android:inputType="textCapCharacters"
+        app:layout_constraintBottom_toTopOf="@+id/cityEdit"
+        app:layout_constraintEnd_toEndOf="@+id/zipcodeEdit"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/cityEdit"
+        app:layout_constraintTop_toBottomOf="@+id/contactEdit"
+        app:layout_constraintVertical_bias="0.781" />
+
+    <EditText
+        android:id="@+id/cityEdit"
+        android:layout_width="168dp"
+        android:layout_height="47dp"
+        android:layout_marginBottom="44dp"
+        android:hint="City"
+        android:inputType="textCapWords"
+        app:layout_constraintBottom_toTopOf="@+id/homePhoneEdit"
+        app:layout_constraintEnd_toEndOf="@+id/homePhoneEdit"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/homePhoneEdit"
+        app:layout_constraintTop_toBottomOf="@+id/contactEdit"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ems="9" />
+
+    <EditText
+        android:id="@+id/zipcodeEdit"
+        android:layout_width="142dp"
+        android:layout_height="49dp"
+        android:layout_marginBottom="40dp"
+        android:ems="5"
+        android:hint="Zip Code"
+        android:inputType="number"
+        android:maxLength="5"
+        app:layout_constraintBottom_toTopOf="@+id/cellPhoneEdit"
+        app:layout_constraintEnd_toEndOf="@+id/cellPhoneEdit"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/cellPhoneEdit"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.979" />
+
+    <TextView
+        android:id="@+id/homeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Home Phone:"
+        app:layout_constraintBottom_toTopOf="@+id/homePhoneEdit"
+        app:layout_constraintEnd_toEndOf="@+id/homePhoneEdit"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/homePhoneEdit"
+        app:layout_constraintTop_toBottomOf="@+id/cityEdit" />
+
+    <EditText
+        android:id="@+id/homePhoneEdit"
+        android:layout_width="161dp"
+        android:layout_height="47dp"
+        android:layout_marginBottom="40dp"
+        android:hint="Enter Phone Number"
+        android:inputType="text"
+        android:maxLength="14"
+        app:layout_constraintBottom_toTopOf="@+id/emailEdit"
+        app:layout_constraintEnd_toEndOf="@+id/emailEdit"
+        app:layout_constraintHorizontal_bias="0.081"
+        app:layout_constraintStart_toStartOf="@+id/emailEdit"
+        tools:ems="8" />
+
+    <EditText
+        android:id="@+id/cellPhoneEdit"
+        android:layout_width="183dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="420dp"
+        android:ems="8"
+        android:hint="Enter Phone Number"
+        android:inputType="text"
+        android:maxLength="14"
+        app:layout_constraintBottom_toTopOf="@+id/emailEdit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.929"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.09" />
+
+    <TextView
+        android:id="@+id/emailText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email:"
+        app:layout_constraintBottom_toTopOf="@+id/emailEdit"
+        app:layout_constraintEnd_toEndOf="@+id/emailEdit"
+        app:layout_constraintHorizontal_bias="0.026"
+        app:layout_constraintStart_toStartOf="@+id/emailEdit"
+        app:layout_constraintTop_toBottomOf="@+id/homePhoneEdit"
+        app:layout_constraintVertical_bias="0.571" />
+
+    <EditText
+        android:id="@+id/emailEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="184dp"
+        android:ems="10"
+        android:hint="Enter Email Address"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.743" />
+
+    <TextView
+        android:id="@+id/bdayText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="138dp"
+        android:text="Birthday:"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailEdit"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/stateEdit"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="12dp"
+        android:hint="State"
+        android:inputType="textCapCharacters"
+        android:maxLength="2"
+        app:layout_constraintBottom_toTopOf="@+id/cellPhoneText"
+        app:layout_constraintEnd_toEndOf="@+id/cellPhoneText"
+        app:layout_constraintHorizontal_bias="0.929"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addressEdit"
+        app:layout_constraintVertical_bias="0.937"
+        tools:ems="2" />
+
+    <Button
+        android:id="@+id/changeButton"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="109dp"
+        android:layout_height="39dp"
+        android:text="Change"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.701"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.813" />
+
+    <TextView
+        android:id="@+id/textBirthday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="01/01/1970"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.291"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailEdit"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
