@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements com.example.mycon
     protected void initSettingsButton() {
         ImageButton imgButton = findViewById(R.id.settingsIcon);
         imgButton.setOnClickListener(b -> {
-            Intent intent = new Intent(MainActivity.this, ContactListActivity.class);
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });

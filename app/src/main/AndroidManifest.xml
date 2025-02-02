@@ -21,6 +21,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ContactListActivity" />
+
+        <activity android:name=".MapActivity" />
+
+        <activity android:name=".SettingsActivity" />
+
+
     </application>
 
 </manifest>
