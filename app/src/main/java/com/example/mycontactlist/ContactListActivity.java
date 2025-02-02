@@ -22,5 +22,34 @@ public class ContactListActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        initListButton();
+        initMapButton();
+        initSettingsButton();
+    }
+
+    protected void initListButton() {
+        ImageButton imgButton = findViewById(R.id.contactIcon);
+        imgButton.setOnClickListener(b -> {
+            Intent intent = new Intent(ContactListActivity.this, ContactListActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
+    }
+
+    protected void initMapButton() {
+        ImageButton imgButton = findViewById(R.id.mapIcon);
+        imgButton.setOnClickListener(b -> {
+            Intent intent = new Intent(ContactListActivity.this, MapActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
+    }
+    protected void initSettingsButton() {
+        ImageButton imgButton = findViewById(R.id.settingsIcon);
+        imgButton.setOnClickListener(b -> {
+            Intent intent = new Intent(ContactListActivity.this, SettingsActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
     }
 }
