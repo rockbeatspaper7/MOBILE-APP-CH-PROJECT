@@ -45,10 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
     protected void initSettingsButton() {
         ImageButton imgButton = findViewById(R.id.settingsIcon);
-        imgButton.setOnClickListener(b -> {
-            Intent intent = new Intent(SettingsActivity.this, SettingsActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        });
+        imgButton.setEnabled(false);
     }
+
 }
