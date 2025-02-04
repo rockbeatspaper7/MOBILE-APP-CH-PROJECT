@@ -103,7 +103,7 @@
         app:layout_constraintVertical_bias="0.327" />
 
     <RadioGroup
-        android:id="@+id/radioGroup3"
+        android:id="@+id/radioGroupSortBy"
         android:layout_width="117dp"
         android:layout_height="77dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -133,8 +133,9 @@
     </RadioGroup>
 
     <RadioGroup
-        android:layout_width="128dp"
-        android:layout_height="48dp"
+        android:id="@+id/radioGroupSortOrder"
+        android:layout_width="118dp"
+        android:layout_height="52dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.083"
