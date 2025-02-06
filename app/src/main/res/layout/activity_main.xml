@@ -12,12 +12,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cell Phone:"
-        app:layout_constraintBottom_toTopOf="@+id/cellPhoneEdit"
-        app:layout_constraintEnd_toEndOf="@+id/cellPhoneEdit"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/cellPhoneEdit"
-        app:layout_constraintTop_toBottomOf="@+id/zipcodeEdit"
-        app:layout_constraintVertical_bias="0.48" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.621"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.55" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -209,24 +209,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Home Phone:"
-        app:layout_constraintBottom_toTopOf="@+id/homePhoneEdit"
-        app:layout_constraintEnd_toEndOf="@+id/homePhoneEdit"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/homePhoneEdit"
-        app:layout_constraintTop_toBottomOf="@+id/cityEdit" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.067"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.55" />
 
     <EditText
         android:id="@+id/homePhoneEdit"
         android:layout_width="161dp"
         android:layout_height="47dp"
-        android:layout_marginBottom="40dp"
         android:hint="Enter Phone Number"
         android:inputType="text"
         android:maxLength="14"
-        app:layout_constraintBottom_toTopOf="@+id/emailEdit"
-        app:layout_constraintEnd_toEndOf="@+id/emailEdit"
-        app:layout_constraintHorizontal_bias="0.081"
-        app:layout_constraintStart_toStartOf="@+id/emailEdit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.048"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.618"
         tools:ems="8" />
 
     <EditText
@@ -249,23 +251,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Email:"
-        app:layout_constraintBottom_toTopOf="@+id/emailEdit"
-        app:layout_constraintEnd_toEndOf="@+id/emailEdit"
-        app:layout_constraintHorizontal_bias="0.026"
-        app:layout_constraintStart_toStartOf="@+id/emailEdit"
-        app:layout_constraintTop_toBottomOf="@+id/homePhoneEdit"
-        app:layout_constraintVertical_bias="0.571" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.058"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.679" />
 
     <EditText
         android:id="@+id/emailEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="184dp"
         android:ems="10"
         android:hint="Enter Email Address"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.743" />
 
@@ -273,15 +276,13 @@
         android:id="@+id/bdayText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="138dp"
         android:text="Birthday:"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintHorizontal_bias="0.061"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailEdit"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.801" />
 
     <EditText
         android:id="@+id/stateEdit"
@@ -315,13 +316,12 @@
         android:id="@+id/textBirthday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:text="01/01/1970"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.291"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailEdit"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
