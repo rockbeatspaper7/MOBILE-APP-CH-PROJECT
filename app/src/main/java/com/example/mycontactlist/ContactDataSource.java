@@ -78,7 +78,7 @@ public class ContactDataSource {
         return didSucceed;
     }
 
-    public int getLastContactID() {
+    public int getLastMarketID() {
         int lastId;
         try {
             String query = "Select MAX (_id) from contact";

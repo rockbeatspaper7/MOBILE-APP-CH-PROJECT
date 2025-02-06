@@ -168,43 +168,41 @@
         android:ems="10"
         android:hint="Enter Street Address"
         android:inputType="textCapCharacters"
-        app:layout_constraintBottom_toTopOf="@+id/cityEdit"
-        app:layout_constraintEnd_toEndOf="@+id/zipcodeEdit"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/cityEdit"
-        app:layout_constraintTop_toBottomOf="@+id/contactEdit"
-        app:layout_constraintVertical_bias="0.781" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.319"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.362" />
 
     <EditText
         android:id="@+id/cityEdit"
         android:layout_width="168dp"
         android:layout_height="47dp"
-        android:layout_marginBottom="44dp"
         android:hint="City"
         android:inputType="textCapWords"
-        app:layout_constraintBottom_toTopOf="@+id/homePhoneEdit"
-        app:layout_constraintEnd_toEndOf="@+id/homePhoneEdit"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/homePhoneEdit"
-        app:layout_constraintTop_toBottomOf="@+id/contactEdit"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.48"
         tools:ems="9" />
 
     <EditText
         android:id="@+id/zipcodeEdit"
         android:layout_width="142dp"
         android:layout_height="49dp"
-        android:layout_marginBottom="40dp"
         android:ems="5"
         android:hint="Zip Code"
         android:inputType="number"
         android:maxLength="5"
-        app:layout_constraintBottom_toTopOf="@+id/cellPhoneEdit"
-        app:layout_constraintEnd_toEndOf="@+id/cellPhoneEdit"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/cellPhoneEdit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.94"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.979" />
+        app:layout_constraintVertical_bias="0.486" />
 
     <TextView
         android:id="@+id/homeText"
@@ -235,17 +233,16 @@
         android:id="@+id/cellPhoneEdit"
         android:layout_width="183dp"
         android:layout_height="47dp"
-        android:layout_marginTop="420dp"
         android:ems="8"
         android:hint="Enter Phone Number"
         android:inputType="text"
         android:maxLength="14"
-        app:layout_constraintBottom_toTopOf="@+id/emailEdit"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.929"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.09" />
+        app:layout_constraintVertical_bias="0.618" />
 
     <TextView
         android:id="@+id/emailText"
@@ -290,17 +287,15 @@
         android:id="@+id/stateEdit"
         android:layout_width="50dp"
         android:layout_height="45dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="12dp"
         android:hint="State"
         android:inputType="textCapCharacters"
         android:maxLength="2"
-        app:layout_constraintBottom_toTopOf="@+id/cellPhoneText"
-        app:layout_constraintEnd_toEndOf="@+id/cellPhoneText"
-        app:layout_constraintHorizontal_bias="0.929"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.534"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addressEdit"
-        app:layout_constraintVertical_bias="0.937"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.483"
         tools:ems="2" />
 
     <Button

@@ -28,6 +28,8 @@ public class SettingsActivity extends AppCompatActivity {
         initListButton();
         initMapButton();
         initSettingsButton();
+        initSettings();
+        initSortByClick();
     }
 
     protected void initListButton() {

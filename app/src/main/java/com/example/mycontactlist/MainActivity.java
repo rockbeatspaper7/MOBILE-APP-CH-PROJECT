@@ -1,11 +1,6 @@
 package com.example.mycontactlist;
 
-import static java.util.TimeZone.getDefault;
-
-import android.app.DatePickerDialog;
 import android.content.Context;
-import android.preference.EditTextPreference;
-import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.telephony.PhoneNumberUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -241,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements com.example.mycon
 
                     if (currentContact.getId() == -1) {
                         wasSuccessful = ds.insertContact(currentContact);
-                        int newId = ds.getLastContactID();
+                        int newId = ds.getLastMarketID();
                         currentContact.setId(newId);
                     }
                     else {
