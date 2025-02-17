@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ContactDataSource {
     private SQLiteDatabase database;
@@ -37,7 +38,7 @@ public class ContactDataSource {
             initialValues.put("phonenumber", c.getHomePhoneNumber());
             initialValues.put("cellnumber", c.getCellNumber());
             initialValues.put("email", c.getEmail());
-            initialValues.put("birthday", c.getBirthday());
+            initialValues.put("birthday", String.valueOf(c.getBirthday().getTimeInMillis()));
 
             long result = database.insert("contact", null, initialValues);
 
@@ -64,7 +65,8 @@ public class ContactDataSource {
             updateValues.put("phonenumber", c.getHomePhoneNumber());
             updateValues.put("cellnumber", c.getCellNumber());
             updateValues.put("email", c.getEmail());
-            updateValues.put("birthday", c.getBirthday());
+            updateValues.put("birthday",
+                    String.valueOf(c.getBirthday().getTimeInMillis()));
 
             int rowsUpdated = database.update("contact", updateValues, "_id=" + rowId, null);
 
@@ -113,6 +115,39 @@ public class ContactDataSource {
             contactNames = new ArrayList<String>();
         }
         return contactNames;
+    }
+
+    public ArrayList<Contact> getContacts() {
+        ArrayList<Contact> contacts = new ArrayList<Contact>();
+        try {
+            String query = "SELECT * FROM contact";
+            Cursor cursor = database.rawQuery(query, null);
+
+            Contact newContact;
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                newContact = new Contact();
+                newContact.setId(cursor.getInt(0));
+                newContact.setContactName(cursor.getString(1));
+                newContact.setStreetAddress(cursor.getString(2));
+                newContact.setCity(cursor.getString(3));
+                newContact.setState(cursor.getString(4));
+                newContact.setZipCode(cursor.getString(5));
+                newContact.setHomePhoneNumber(cursor.getString(6));
+                newContact.setCellNumber(cursor.getString(7));
+                newContact.setEmail(cursor.getString(8));
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(Long.valueOf(cursor.getString(9)));
+                newContact.setBirthday(calendar);
+                contacts.add(newContact);
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
+        catch (Exception e) {
+            contacts = new ArrayList<Contact>();
+        }
+        return contacts;
     }
 
 }

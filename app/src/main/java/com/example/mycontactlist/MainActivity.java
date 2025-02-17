@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements com.example.mycon
     public void didFinishDatePickerDialog(Calendar selectedTime) {
         TextView birthDay = findViewById(R.id.textBirthday);
         birthDay.setText(DateFormat.format("MM/dd/yyyy", selectedTime));
-        currentContact.setBirthday(selectedTime.toString());
+        currentContact.setBirthday(selectedTime);
     }
 
     private void initChangeDateButton() {

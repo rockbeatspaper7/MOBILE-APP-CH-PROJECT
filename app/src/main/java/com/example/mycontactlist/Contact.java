@@ -11,11 +11,11 @@ public class Contact {
     private String phoneNumber;
     private String cellNumber;
     private String email;
-    private String birthday;
+    private Calendar birthday;
 
     public Contact() {
         id=-1;
-        birthday = String.valueOf(Calendar.getInstance());
+        birthday = Calendar.getInstance();
     }
 
     public void setId(long id) {
@@ -54,8 +54,8 @@ public class Contact {
         this.email = email;
     }
 
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
+    public void setBirthday(Calendar c) {
+        birthday = c;
     }
 
 
@@ -95,7 +95,7 @@ public class Contact {
         return email;
     }
 
-    public String getBirthday() {
+    public Calendar getBirthday() {
         return birthday;
     }
 }
