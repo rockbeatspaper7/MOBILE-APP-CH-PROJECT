@@ -39,11 +39,7 @@ public class MapActivity extends AppCompatActivity {
 
     protected void initMapButton() {
         ImageButton imgButton = findViewById(R.id.mapIcon);
-        imgButton.setOnClickListener(b -> {
-            Intent intent = new Intent(MapActivity.this, MapActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        });
+        imgButton.setEnabled(false);
     }
     protected void initSettingsButton() {
         ImageButton imgButton = findViewById(R.id.settingsIcon);
