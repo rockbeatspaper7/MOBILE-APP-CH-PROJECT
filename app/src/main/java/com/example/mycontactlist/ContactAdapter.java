@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class ContactAdapter extends RecyclerView.Adapter {
     private ArrayList<String> contactData;
+    private View.OnClickListener mOnItemClickListener;
 
     public class ContactViewHolder extends RecyclerView.ViewHolder {
 
@@ -19,6 +20,8 @@ public class ContactAdapter extends RecyclerView.Adapter {
         public ContactViewHolder (@NonNull View itemView) {
             super(itemView);
             textViewContact = itemView.findViewById(R.id.textViewName);
+            itemView.setTag(this);
+            itemView.setOnClickListener(mOnItemClickListener);
         }
 
         public TextView getContactTextView() {
@@ -28,6 +31,10 @@ public class ContactAdapter extends RecyclerView.Adapter {
     }
     public ContactAdapter (ArrayList<String> arrayList) {
         contactData = arrayList;
+    }
+
+    public void setmOnItemClickListener(View.OnClickListener mOnItemClickListener) {
+        this.mOnItemClickListener = mOnItemClickListener;
     }
 
     @NonNull
