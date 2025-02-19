@@ -2,7 +2,7 @@ package com.example.mycontactlist;
 import java.util.Calendar;
 
 public class Contact {
-    private long id;
+    private int id;
     private String contactName;
     private String streetAddress;
     private String city;
@@ -18,7 +18,7 @@ public class Contact {
         birthday = Calendar.getInstance();
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

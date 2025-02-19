@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.activity.EdgeToEdge;
@@ -86,6 +87,41 @@ public class MainActivity extends AppCompatActivity implements com.example.mycon
         });
     }
 
+    private void initContact(int id) {
+
+        ContactDataSource ds = new ContactDataSource(MainActivity.this);
+        try {
+            ds.open();
+            currentContact = ds.getSpecificContacts(id);
+            ds.close();
+        }
+        catch (Exception e) {
+            Toast.makeText(this, "Load Contact Failed", Toast.LENGTH_LONG).show();
+        }
+        EditText editName = findViewById(R.id.contactEdit);
+        EditText editAddress = findViewById(R.id.addressEdit);
+        EditText editCity = findViewById(R.id.cityEdit);
+        EditText editState = findViewById(R.id.stateEdit);
+        EditText editZipcode = findViewById(R.id.zipcodeEdit);
+        EditText editCell = findViewById(R.id.cellPhoneEdit);
+        EditText editHome = findViewById(R.id.homePhoneEdit);
+        EditText editEmail = findViewById(R.id.emailEdit);
+        TextView birthDay = findViewById(R.id.textBirthday);
+
+        editName.setText(currentContact.getContactName());
+        editAddress.setText(currentContact.getStreetAddress());
+        editCity.setText(currentContact.getCity());
+        editState.setText(currentContact.getState());
+        editZipcode.setText(currentContact.getZipCode());
+
+        editCell.setText(currentContact.getCellNumber());
+        editHome.setText(currentContact.getHomePhoneNumber());
+        editEmail.setText(currentContact.getEmail());
+        birthDay.setText(DateFormat.format("MM/dd/yyyy",
+                currentContact.getBirthday().getTimeInMillis()).toString());
+
+    }
+
     private void setForEditing(boolean enabled) {
         EditText editName = findViewById(R.id.contactEdit);
         EditText editStreet = findViewById(R.id.addressEdit);
@@ -147,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements com.example.mycon
         });
 
         final EditText etStreetAddress = findViewById(R.id.addressEdit);
-        etContactName.addTextChangedListener(new TextWatcher() {
+        etStreetAddress.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -164,8 +200,8 @@ public class MainActivity extends AppCompatActivity implements com.example.mycon
             }
         });
 
-        final EditText etCellPhone = findViewById(R.id.cellPhoneEdit);
-        etContactName.addTextChangedListener(new TextWatcher() {
+        final EditText etCity = findViewById(R.id.cityEdit);
+        etCity.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -178,12 +214,67 @@ public class MainActivity extends AppCompatActivity implements com.example.mycon
 
             @Override
             public void afterTextChanged(Editable s) {
-                currentContact.setCellNumber(etCellPhone.getText().toString());
+                currentContact.setCity(etCity.getText().toString());
+            }
+        });
+
+        final EditText etState = findViewById(R.id.stateEdit);
+        etState.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                currentContact.setState(etState.getText().toString());
+            }
+        });
+
+        final EditText etZipcode = findViewById(R.id.zipcodeEdit);
+        etZipcode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                currentContact.setZipCode(etZipcode.getText().toString());
+            }
+        });
+
+        final EditText etCellPhone = findViewById(R.id.cellPhoneEdit);
+        etCellPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String formattedNumber = PhoneNumberUtils.formatNumber(s.toString(), Locale.getDefault().getCountry());
+                currentContact.setCellNumber(formattedNumber);
             }
         });
 
         final EditText etHomePhone = findViewById(R.id.homePhoneEdit);
-        etContactName.addTextChangedListener(new TextWatcher() {
+        etHomePhone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -197,12 +288,12 @@ public class MainActivity extends AppCompatActivity implements com.example.mycon
             @Override
             public void afterTextChanged(Editable s) {
                 String formattedNumber = PhoneNumberUtils.formatNumber(s.toString(), Locale.getDefault().getCountry());
-                currentContact.setHomePhoneNumber(etHomePhone.getText().toString());
+                currentContact.setHomePhoneNumber(formattedNumber);
             }
         });
 
         final EditText etEmail = findViewById(R.id.emailEdit);
-        etContactName.addTextChangedListener(new TextWatcher() {
+        etEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -215,7 +306,6 @@ public class MainActivity extends AppCompatActivity implements com.example.mycon
 
             @Override
             public void afterTextChanged(Editable s) {
-                String formattedNumber = PhoneNumberUtils.formatNumber(s.toString(), Locale.getDefault().getCountry());
                 currentContact.setEmail(etEmail.getText().toString());
             }
         });
