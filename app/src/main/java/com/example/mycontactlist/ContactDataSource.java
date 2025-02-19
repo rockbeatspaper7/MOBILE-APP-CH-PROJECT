@@ -154,7 +154,7 @@ public class ContactDataSource {
         return contacts;
     }
 
-    public Contact getSpecificContacts(int contactId) {
+    public Contact getSpecificContacts(long contactId) {
         Contact contact = new Contact();
         String query = "SELECT * FROM contact WHERE _id =" + contactId;
 
@@ -180,6 +180,17 @@ public class ContactDataSource {
                 cursor.close();
             }
             return contact;
+    }
+
+    public boolean deleteContact(long contactId) {
+        boolean didDelete = false;
+        try {
+            didDelete = database.delete("contact", "_id=" + contactId, null) > 0;
+        }
+        catch (Exception e) {
+            //Do nothing -return value already set to false
+        }
+        return didDelete;
     }
 }
 

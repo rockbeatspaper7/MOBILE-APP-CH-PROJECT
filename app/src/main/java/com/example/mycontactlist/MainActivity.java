@@ -28,8 +28,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements com.example.mycontactlist.DatePickerDialog.SaveDateListener {
-
-    private Contact currentContact = new Contact();
+    private Contact currentContact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +47,15 @@ public class MainActivity extends AppCompatActivity implements com.example.mycon
         initSettingsButton();
         initToggleButton();
         initChangeDateButton();
+
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            initContact(extras.getLong("contactID"));
+        }
+        else {
+            currentContact = new Contact();
+        }
+
         setForEditing(false);
         initSaveButton();
         initTextChangedEvents();
@@ -87,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements com.example.mycon
         });
     }
 
-    private void initContact(int id) {
+    private void initContact(long id) {
 
         ContactDataSource ds = new ContactDataSource(MainActivity.this);
         try {
