@@ -14,6 +14,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class SettingsActivity extends AppCompatActivity {
+    RadioButton rbName;
+    RadioButton rbCity;
+    RadioButton rbBday;
+
+    RadioButton rbAscend;
+    RadioButton rbDesc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +36,7 @@ public class SettingsActivity extends AppCompatActivity {
         initSettingsButton();
         initSettings();
         initSortByClick();
+        initSortOrderClick();
     }
 
     protected void initListButton() {
@@ -73,8 +80,8 @@ public class SettingsActivity extends AppCompatActivity {
             rbBday.setChecked(true);
         }
 
-        RadioButton rbAscend = findViewById(R.id.radioAsc);
-        RadioButton rbDesc = findViewById(R.id.radioDesc);
+        rbAscend = findViewById(R.id.radioAsc);
+        rbDesc = findViewById(R.id.radioDesc);
         if (sortOrder.equalsIgnoreCase("ASC")) {
             rbAscend.setChecked(true);
         }
@@ -99,6 +106,21 @@ public class SettingsActivity extends AppCompatActivity {
                         Context.MODE_PRIVATE).edit().putString("sortfield", "birthday").apply();
             }
 
+        });
+    }
+
+    private void initSortOrderClick() {
+        RadioGroup rgSortOrder = findViewById(R.id.radioGroupSortOrder);
+        rgSortOrder.setOnCheckedChangeListener((group, checkedId) -> {
+            rbAscend = SettingsActivity.this.findViewById(R.id.radioAsc);
+            rbDesc = SettingsActivity.this.findViewById(R.id.radioDesc);
+            if (rbAscend.isChecked()) {
+                SettingsActivity.this.getSharedPreferences("MyContactListPreferences",
+                        Context.MODE_PRIVATE).edit().putString("sortorder", "ASC").apply();
+            } else if (rbDesc.isChecked()) {
+                SettingsActivity.this.getSharedPreferences("MyContactListPreferences",
+                        Context.MODE_PRIVATE).edit().putString("sortorder", "DESC").apply();
+            }
         });
     }
 }

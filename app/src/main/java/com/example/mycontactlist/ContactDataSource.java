@@ -122,9 +122,9 @@ public class ContactDataSource {
         try {
             String query = "SELECT * FROM contact ORDER BY " + sortField + " " + sortOrder;
 
-            Log.d("DEBUG", "Fetching contacts from database...");
+            Log.d("Test!", "Fetching contacts from database...");
             Cursor cursor = database.rawQuery(query, null);
-            Log.d("DEBUG", "Rows fetched: " + cursor.getCount());
+            Log.d("Test!", "Rows fetched: " + cursor.getCount());
 
             Contact newContact;
             cursor.moveToFirst();
@@ -158,9 +158,9 @@ public class ContactDataSource {
         Contact contact = new Contact();
         String query = "SELECT * FROM contact WHERE _id =" + contactId;
 
-            Log.d("DEBUG", "Fetching contacts from database...");
+            Log.d("Test!", "Fetching contacts from database...");
             Cursor cursor = database.rawQuery(query, null);
-            Log.d("DEBUG", "Rows fetched: " + cursor.getCount());
+            Log.d("Test!", "Rows fetched: " + cursor.getCount());
 
             if (cursor.moveToFirst()) {
                 contact.setId(cursor.getInt(0));
