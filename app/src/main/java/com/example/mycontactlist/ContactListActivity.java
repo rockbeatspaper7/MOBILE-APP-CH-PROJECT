@@ -1,5 +1,6 @@
 package com.example.mycontactlist;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,13 +50,17 @@ public class ContactListActivity extends AppCompatActivity {
         initAddContactButton();
         initDeleteSwitch();
 
+        String sortBy = getSharedPreferences("MyContactListPreferences",
+                Context.MODE_PRIVATE).getString("sortfield", "contactname");
+        String sortOrder = getSharedPreferences("MyContactListPreferences",
+                Context.MODE_PRIVATE).getString("sortorder", "ASC");
 
         ContactDataSource ds = new ContactDataSource(this);
 
         try {
             ds.open();
             Log.d("Test!", "Database opened successfully");
-            contacts = ds.getContacts();
+            contacts = ds.getContacts(sortBy, sortOrder);
             ds.close();
             Log.d("Test!", "Contacts retrieved: " + contacts.size());
             Log.d("Test!", "Contacts size: " + contacts.size());
@@ -77,6 +82,8 @@ public class ContactListActivity extends AppCompatActivity {
         }
 
     }
+
+
 
     protected void initListButton() {
         ImageButton imgButton = findViewById(R.id.contactIcon);
@@ -103,7 +110,7 @@ public class ContactListActivity extends AppCompatActivity {
     protected void initAddContactButton() {
         Button newContact = findViewById(R.id.buttonAddContact);
         newContact.setOnClickListener(b -> {
-            Intent intent = new Intent(ContactListActivity.this, MapActivity.class);
+            Intent intent = new Intent(ContactListActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });
@@ -121,5 +128,43 @@ public class ContactListActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        String sortBy = getSharedPreferences("MyContactListPreferences",
+                Context.MODE_PRIVATE).getString("sortfield", "contactname");
+        String sortOrder = getSharedPreferences("MyContactListPreferences",
+                Context.MODE_PRIVATE).getString("sortorder", "ASC");
+
+        ContactDataSource ds = new ContactDataSource(this);
+
+        try {
+            ds.open();
+            Log.d("Test!", "Database opened successfully");
+            contacts = ds.getContacts(sortBy, sortOrder);
+            ds.close();
+            Log.d("Test!", "Contacts retrieved: " + contacts.size());
+            Log.d("Test!", "Contacts size: " + contacts.size());
+
+            if (contacts.size() > 0) {
+                RecyclerView contactList = findViewById(R.id.rvContacts);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+
+                contactList.setLayoutManager(layoutManager);
+                contactAdapter = new ContactAdapter(contacts, ContactListActivity.this);
+                contactAdapter.setmOnItemClickListener(onItemClickListener);
+                contactList.setAdapter(contactAdapter);
+            }
+
+            else {
+                Intent intent = new Intent(ContactListActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+
+        }
+        catch (Exception e) {
+            Toast.makeText(this, "Error receiving contacts", Toast.LENGTH_LONG).show();
+        }
+    }
 
 }

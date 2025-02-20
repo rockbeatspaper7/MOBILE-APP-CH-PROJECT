@@ -13,7 +13,7 @@
         android:theme="@style/Theme.MyContactList"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".ContactListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ContactListActivity" />
+        <activity android:name=".MainActivity" />
 
         <activity android:name=".MapActivity" />
 

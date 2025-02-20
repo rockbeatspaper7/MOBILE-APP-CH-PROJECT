@@ -117,10 +117,10 @@ public class ContactDataSource {
         return contactNames;
     }
 
-    public ArrayList<Contact> getContacts() {
+    public ArrayList<Contact> getContacts(String sortField, String sortOrder) {
         ArrayList<Contact> contacts = new ArrayList<>();
         try {
-            String query = "SELECT * FROM contact";
+            String query = "SELECT * FROM contact ORDER BY " + sortField + " " + sortOrder;
 
             Log.d("DEBUG", "Fetching contacts from database...");
             Cursor cursor = database.rawQuery(query, null);

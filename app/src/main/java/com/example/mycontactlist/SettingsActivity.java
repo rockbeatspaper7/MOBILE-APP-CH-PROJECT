@@ -55,9 +55,9 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void initSettings() {
-        String sortBy = getSharedPreferences("MyContactListPrefences",
+        String sortBy = getSharedPreferences("MyContactListPreferences",
                 Context.MODE_PRIVATE).getString("sortfield", "contactname");
-        String sortOrder = getSharedPreferences("MyContactListPrefences",
+        String sortOrder = getSharedPreferences("MyContactListPreferences",
                 Context.MODE_PRIVATE).getString("sortorder", "ASC");
 
         RadioButton rbName = findViewById(R.id.radioName);
@@ -85,23 +85,20 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void initSortByClick() {
         RadioGroup rgSortBy = findViewById(R.id.radioGroupSortBy);
-        rgSortBy.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton rbName = SettingsActivity.this.findViewById(R.id.radioName);
-                RadioButton rbCity = SettingsActivity.this.findViewById(R.id.radioCity);
-                if (rbName.isChecked()) {
-                    SettingsActivity.this.getSharedPreferences("MyContactPreferences",
-                            Context.MODE_PRIVATE).edit().putString("sortfield", "contactname").apply();
-                } else if (rbCity.isChecked()) {
-                    SettingsActivity.this.getSharedPreferences("MyContactPreferences",
-                            Context.MODE_PRIVATE).edit().putString("sortfield", "city").apply();
-                } else {
-                    SettingsActivity.this.getSharedPreferences("MyContactPreferences",
-                            Context.MODE_PRIVATE).edit().putString("sortfield", "birthday").apply();
-                }
-
+        rgSortBy.setOnCheckedChangeListener((group, checkedId) -> {
+            RadioButton rbName = SettingsActivity.this.findViewById(R.id.radioName);
+            RadioButton rbCity = SettingsActivity.this.findViewById(R.id.radioCity);
+            if (rbName.isChecked()) {
+                SettingsActivity.this.getSharedPreferences("MyContactListPreferences",
+                        Context.MODE_PRIVATE).edit().putString("sortfield", "contactname").apply();
+            } else if (rbCity.isChecked()) {
+                SettingsActivity.this.getSharedPreferences("MyContactListPreferences",
+                        Context.MODE_PRIVATE).edit().putString("sortfield", "city").apply();
+            } else {
+                SettingsActivity.this.getSharedPreferences("MyContactListPreferences",
+                        Context.MODE_PRIVATE).edit().putString("sortfield", "birthday").apply();
             }
+
         });
     }
 }
