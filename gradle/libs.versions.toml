@@ -11,6 +11,8 @@ playServicesMaps = "19.1.0"
 playServicesMapsLicense = "12.0.1"
 design = "28.0.0"
 playServices = "12.0.1"
+playServicesLocation = "21.3.0"
+multidex = "1.0.3"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -24,6 +26,8 @@ play-services-maps = { group = "com.google.android.gms", name = "play-services-m
 play-services-maps-license = { group = "com.google.android.gms", name = "play-services-maps-license", version.ref = "playServicesMapsLicense" }
 design = { group = "com.android.support", name = "design", version.ref = "design" }
 play-services = { group = "com.google.android.gms", name = "play-services", version.ref = "playServices" }
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
+multidex = { group = "com.android.support", name = "multidex", version.ref = "multidex" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

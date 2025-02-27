@@ -74,6 +74,12 @@ public class MainActivity extends AppCompatActivity implements com.example.mycon
         ImageButton imgButton = findViewById(R.id.mapIcon);
         imgButton.setOnClickListener(b -> {
             Intent intent = new Intent(MainActivity.this, MapActivity.class);
+            if (currentContact.getId() == -1) {
+                Toast.makeText(getBaseContext(), "Contact must be saved before it can be mapped", Toast.LENGTH_LONG).show();
+            }
+            else {
+                intent.putExtra("contactID", currentContact.getId());
+            }
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         });
