@@ -7,6 +7,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -56,6 +60,10 @@ import java.util.List;
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
     final int PERMISSION_REQUEST_LOCATION = 101;
     GoogleMap gMap;
+    SensorManager sensorManager;
+    Sensor accelerometer;
+    Sensor magnetometer;
+    TextView textDirection;
     FusedLocationProviderClient fusedLocationProviderClient;
     LocationRequest locationRequest;
     LocationCallback locationCallback;
@@ -100,6 +108,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+
+        if (accelerometer != null && magnetometer != null) {
+            sensorManager.registerListener(mySensorEventListener, accelerometer,
+                                                SensorManager.SENSOR_DELAY_FASTEST);
+            sensorManager.registerListener(mySensorEventListener, magnetometer,
+                    SensorManager.SENSOR_DELAY_FASTEST);
+        }
+        else {
+            Toast.makeText(this, "Sensors not found!!", Toast.LENGTH_LONG).show();
+        }
+        textDirection = (TextView) findViewById(R.id.textHeading);
+
+
         createLocationRequest();
         createLocationCallback();
 
@@ -114,6 +138,43 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onPause();
         stopLocationUpdates();
     }
+
+    private SensorEventListener mySensorEventListener = new SensorEventListener() {
+        float[] accelerometerValues;
+        float[] magneticValues;
+
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
+                accelerometerValues = event.values;
+            if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD)
+                magneticValues = event.values;
+            if (accelerometerValues != null && magneticValues != null) {
+                float R[] = new float[9];
+                float I[] = new float[9];
+
+                boolean success = SensorManager.getRotationMatrix(R, I,
+                                                    accelerometerValues, magneticValues);
+
+                if (success) {
+                    float orientation[] = new float[3];
+                    SensorManager.getOrientation(R, orientation);
+
+                    float azimut = (float) Math.toDegrees(orientation[0]);
+                    if (azimut < 0.0f) { azimut+=360.0f;}
+                    String direction;
+                    if (azimut >= 315 || azimut < 45) {direction = "N"; }
+                    else if (azimut >= 225 && azimut < 315) {direction = "W"; }
+                    else if (azimut >= 135 && azimut < 225) {direction = "S"; }
+                    else { direction = "E"; }
+                    textDirection.setText(direction);
+                }
+            }
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {  }
+    };
 
     protected void initListButton() {
         ImageButton imgButton = findViewById(R.id.contactIcon);

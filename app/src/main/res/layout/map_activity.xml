@@ -96,9 +96,9 @@
     <RadioGroup
         android:id="@+id/radioGroupMapType"
         android:layout_width="176dp"
-        android:layout_height="109dp"
-        android:layout_marginStart="236dp"
-        android:layout_marginTop="548dp"
+        android:layout_height="111dp"
+        android:layout_marginStart="244dp"
+        android:layout_marginTop="544dp"
         app:layout_constraintStart_toStartOf="@+id/map"
         app:layout_constraintTop_toTopOf="@+id/map">
 
@@ -113,6 +113,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Satellite" />
+
     </RadioGroup>
+
+    <TextView
+        android:id="@+id/textHeading"
+        android:layout_width="56dp"
+        android:layout_height="22dp"
+        android:text="WNW"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.856"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.715" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
