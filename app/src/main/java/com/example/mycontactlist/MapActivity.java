@@ -3,6 +3,7 @@ package com.example.mycontactlist;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
@@ -34,6 +35,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,7 +53,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback{
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
     final int PERMISSION_REQUEST_LOCATION = 101;
     GoogleMap gMap;
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -58,6 +61,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     LocationCallback locationCallback;
     ArrayList<Contact> contacts = new ArrayList<>();
     Contact currentContact = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,15 +74,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             ds.open();
             if (extras != null) {
                 currentContact = ds.getSpecificContacts(extras.getInt("contactID"));
-            }
-            else {
+                if (currentContact != null) {
+                    contacts.add(currentContact);
+                }
+            } else {
                 contacts = ds.getContacts("contactname", "ASC");
             }
             ds.close();
-        }
-        catch (Exception e ) {
+        } catch (Exception e) {
             Toast.makeText(this, "Contact(s) could not be retrieved.", Toast.LENGTH_LONG).show();
+
         }
+
+        Log.d("MapActivity", "Contacts initialized with size: " + (contacts == null ? "NULL" : contacts.size()));
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.map_activity_main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -98,27 +106,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         initListButton();
         initMapButton();
         initSettingsButton();
+        initMapTypeButtons();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-
-        if (Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission(getBaseContext(),
-                        android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &
-                        ContextCompat.checkSelfPermission(getBaseContext(),
-                                android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                                PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-
-        try {
-            //locationManager.removeUpdates(gpsListener);
-            //locationManager.removeUpdates(networkListener);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        stopLocationUpdates();
     }
 
     protected void initListButton() {
@@ -134,6 +128,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         ImageButton imgButton = findViewById(R.id.mapIcon);
         imgButton.setEnabled(false);
     }
+
     protected void initSettingsButton() {
         ImageButton imgButton = findViewById(R.id.settingsIcon);
         imgButton.setOnClickListener(b -> {
@@ -155,7 +150,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 super.onLocationResult(locationResult);
                 if (locationResult == null) {
-                    return ;
+                    return;
                 }
                 for (Location location : locationResult.getLocations()) {
                     Toast.makeText(getBaseContext(), "Lat: " + location.getLatitude() +
@@ -166,16 +161,29 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         };
     }
 
-
+    private void initMapTypeButtons() {
+        RadioGroup rgMapType = findViewById(R.id.radioGroupMapType);
+        rgMapType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int i) {
+                RadioButton rbNormal = findViewById(R.id.radioButtonNormal);
+                if (rbNormal.isChecked()) {
+                    gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                } else {
+                    gMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                }
+            }
+        });
+    }
 
     private void startLocationUpdates() {
         if (Build.VERSION.SDK_INT >= 23 &&
-        ContextCompat.checkSelfPermission(getBaseContext(),
-        android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &
                 ContextCompat.checkSelfPermission(getBaseContext(),
-                android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED) {
-            return  ;
+                        android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &
+                        ContextCompat.checkSelfPermission(getBaseContext(),
+                                android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                                PackageManager.PERMISSION_GRANTED) {
+            return;
         }
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
         gMap.setMyLocationEnabled(true);
@@ -189,24 +197,24 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         ContextCompat.checkSelfPermission(getBaseContext(),
                                 android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
                                 PackageManager.PERMISSION_GRANTED) {
-            return  ;
+            return;
         }
         fusedLocationProviderClient.removeLocationUpdates(locationCallback);
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int [] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case PERMISSION_REQUEST_LOCATION: {
                 if (grantResults.length > 0 &&
-                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                     startLocationUpdates();
 
                 } else {
                     Toast.makeText(MapActivity.this, "MyContactList will not locate your contacts.",
-                    Toast.LENGTH_LONG).show();
+                            Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -217,97 +225,78 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         gMap = googleMap;
-        gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         Point size = new Point();
-        WindowManager w = getWindowManager();
-        w.getDefaultDisplay().getSize(size);
+        WindowManager windowManager = getWindowManager();
+        windowManager.getDefaultDisplay().getSize(size);
         int measuredWidth = size.x;
         int measuredHeight = size.y;
-
         if (contacts.size() > 0) {
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             for (int i = 0; i < contacts.size(); i++) {
                 currentContact = contacts.get(i);
 
-                Geocoder geo = new Geocoder(this);
+                Geocoder geocoder = new Geocoder(this);
                 List<Address> addresses = null;
-
                 String address = currentContact.getStreetAddress() + ", " +
-                        currentContact.getCity() + ", " +
-                        currentContact.getState() + ", " +
-                        currentContact.getZipCode();
+                        currentContact.getCity() + ", " + currentContact.getState() + " "
+                        + currentContact.getZipCode();
+
+                Log.d("MapActivity", "Trying to geocode address: " + address);
 
                 try {
-                    addresses = geo.getFromLocationName(address, 1);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    addresses = geocoder.getFromLocationName(address, 1);
+                    Log.d("MapActivity", "Geocoding result size: " + (addresses != null ? addresses.size() : "null"));
+                } catch (Exception e) {
+                    Log.d("MapActivity", "Error", e);
                 }
-                LatLng point = new
-                        LatLng(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
+                if (addresses == null || addresses.isEmpty()) {
+                    Log.e("MapActivity", "No geocoding results found for address: " + address);
+                } else {
+                    LatLng point = new LatLng(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
+                    builder.include(point);
 
-                builder.include(point);
+                    Log.d("MapActivity", "Geocoded address: " + address + " -> Latitude: " + point.latitude + ", Longitude: " + point.longitude);
 
-                gMap.addMarker(new MarkerOptions().position(point).
-                        title(currentContact.getContactName()).snippet(address));
-            }
-            gMap.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(),
-                    measuredWidth, measuredHeight, 450));
-        }
-        else {
+                    gMap.addMarker(new MarkerOptions().position(point)
+                            .title(currentContact.getContactName()).snippet(address));
+                }
+                gMap.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), measuredWidth, measuredHeight, 30));
+                }
+        } else {
             if (currentContact != null) {
-                Geocoder geo = new Geocoder(this);
+                Geocoder geocoder = new Geocoder(this);
                 List<Address> addresses = null;
-
                 String address = currentContact.getStreetAddress() + ", " +
-                        currentContact.getCity() + ", " +
-                        currentContact.getState() + ", " +
-                        currentContact.getZipCode();
+                        currentContact.getCity() + ", " + currentContact.getState() + " "
+                        + currentContact.getZipCode();
                 try {
-                    addresses = geo.getFromLocationName(address, 1);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    addresses = geocoder.getFromLocationName(address, 1);
+                } catch (Exception e) {
+                    Log.d("MapActivity", "Error", e);
                 }
-                LatLng point = new
-                        LatLng(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
-
-                gMap.addMarker(new MarkerOptions().position(point).
-                        title(currentContact.getContactName()).snippet(address));
+                LatLng point = new LatLng(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
+                gMap.addMarker(new MarkerOptions().position(point).title(currentContact.getContactName()).snippet(address));
                 gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(point, 16));
-            }
-            else {
-                AlertDialog alertDialog = new AlertDialog.Builder (MapActivity.this).create();
+            } else {
+                AlertDialog alertDialog = new AlertDialog.Builder(this).create();
                 alertDialog.setTitle("No Data");
-                alertDialog.setMessage("No data is available for the mapping function.");
-                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new Dialog);
+                alertDialog.setMessage("No data is available for the mapping function");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                        (dialog, which) -> dialog.dismiss());
+                alertDialog.show();
             }
+
         }
+
         try {
             if (Build.VERSION.SDK_INT >= 23) {
-                if (ContextCompat.checkSelfPermission(MapActivity.this,
-                        android.Manifest.permission.ACCESS_FINE_LOCATION) !=
-                        PackageManager.PERMISSION_GRANTED) {
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(MapActivity.this,
-                            android.Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-                        Snackbar.make(findViewById(R.id.map_activity_main),
-                                        "MyContactList requires this permission to locate " +
-                                                "your contacts", Snackbar.LENGTH_INDEFINITE)
-                                .setAction("OK", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-
-                                        ActivityCompat.requestPermissions(
-                                                MapActivity.this,
-                                                new String[]{
-                                                        android.Manifest.permission.ACCESS_FINE_LOCATION},
-                                                PERMISSION_REQUEST_LOCATION);
-                                    }
-                                })
-                                .show();
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                        Snackbar.make(findViewById(R.id.main), "Location permission is needed to display location", Snackbar.LENGTH_INDEFINITE)
+                                .setAction("OK", v1 -> ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_LOCATION)).show();
                     } else {
-                        ActivityCompat.requestPermissions(MapActivity.this, new
-                                        String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                                PERMISSION_REQUEST_LOCATION);
+                        startLocationUpdates();
                     }
                 } else {
                     startLocationUpdates();
@@ -315,14 +304,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             } else {
                 startLocationUpdates();
             }
+        } catch (Exception e) {
+            Log.d("MapActivity", "Error", e);
+            Toast.makeText(this, "Error. Location not available", Toast.LENGTH_LONG).show();
         }
-        catch (Exception e) {
-            Toast.makeText(getBaseContext(), "Error requesting permissions", Toast.LENGTH_LONG). show();
-        }
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-        super.onPointerCaptureChanged(hasCapture);
     }
 }
