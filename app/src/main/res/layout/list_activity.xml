@@ -53,7 +53,6 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:text="100%"
-            app:layout_constraintBaseline_to_toBaselineOf="@+id/switchDelete"
             app:layout_constraintEnd_toStartOf="@+id/buttonAddContact"
             app:layout_constraintHorizontal_bias="0.518"
             app:layout_constraintStart_toEndOf="@+id/switchDelete"

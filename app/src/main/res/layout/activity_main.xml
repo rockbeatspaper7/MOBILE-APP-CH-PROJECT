@@ -324,4 +324,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.8" />
 
+    <ImageButton
+        android:id="@+id/ProfileButton"
+        android:layout_width="91dp"
+        android:layout_height="92dp"
+        android:backgroundTint="#C8C4C4"
+        android:scaleType="fitCenter"
+        android:src="@drawable/profile_pic_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.881"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.228" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
