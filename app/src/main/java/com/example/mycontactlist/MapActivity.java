@@ -114,7 +114,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         if (accelerometer != null && magnetometer != null) {
             sensorManager.registerListener(mySensorEventListener, accelerometer,
-                                                SensorManager.SENSOR_DELAY_FASTEST);
+                                                SensorManager.SENSOR_DELAY_NORMAL);
             sensorManager.registerListener(mySensorEventListener, magnetometer,
                     SensorManager.SENSOR_DELAY_FASTEST);
         }
