@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements com.example.mycon
     final int PERMISSION_REQUEST_PHONE = 102;
     final int PERMISSION_REQUEST_CAMERA = 103;
     final int CAMERA_REQUEST = 1888;
+    final int PERMISSION_REQUEST_SMS = 104;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +76,9 @@ public class MainActivity extends AppCompatActivity implements com.example.mycon
         setForEditing(false);
         initSaveButton();
         initTextChangedEvents();
-        initCallFunction();
+        //initCallFunction();
         initCameraButton();
+        initMessagingFunction();
     }
 
     protected void initListButton() {
@@ -473,6 +475,14 @@ public class MainActivity extends AppCompatActivity implements com.example.mycon
                 }
                 return;
             }
+            case PERMISSION_REQUEST_SMS: { // New case for SMS
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(MainActivity.this, "You may now send SMS from this app.", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "You will not be able to send SMS from this app", Toast.LENGTH_LONG).show();
+                }
+                break;
+            }
         }
     }
 
@@ -535,6 +545,50 @@ public class MainActivity extends AppCompatActivity implements com.example.mycon
                 imageContact.setImageBitmap(scaledPhoto);
                 currentContact.setPicture(scaledPhoto);
             }
+        }
+    }
+
+    private void initMessagingFunction() {
+        EditText editPhone = findViewById(R.id.homePhoneEdit);
+        editPhone.setOnLongClickListener(p -> {
+            openSMSApp(currentContact.getHomePhoneNumber());
+            return false;
+        });
+
+        EditText editCell = findViewById(R.id.cellPhoneEdit);
+        editCell.setOnLongClickListener(c -> {
+            openSMSApp(currentContact.getCellNumber());
+            return false;
+        });
+    }
+
+    private void openSMSApp(String phoneNumber) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("sms:" + phoneNumber));
+
+        if (Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.SEND_SMS)
+                        != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
+                    Manifest.permission.SEND_SMS)) {
+
+                Snackbar.make(findViewById(R.id.main),
+                                "This app needs permission to send SMS.",
+                                Snackbar.LENGTH_INDEFINITE).setAction("OK", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                ActivityCompat.requestPermissions(MainActivity.this,
+                                        new String[]{Manifest.permission.SEND_SMS}, PERMISSION_REQUEST_SMS);
+                            }
+                        })
+                        .show();
+            } else {
+                ActivityCompat.requestPermissions(MainActivity.this,
+                        new String[]{Manifest.permission.SEND_SMS}, PERMISSION_REQUEST_SMS);
+            }
+        } else {
+            startActivity(intent);
         }
     }
 
